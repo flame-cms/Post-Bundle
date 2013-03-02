@@ -8,7 +8,7 @@
  * @date    24.11.12
  */
 
-namespace Flame\CMS\AdminModule\Forms\Categories;
+namespace Flame\CMS\PostBundle\Forms\Categories;
 
 interface ICategoryFormFactory
 {

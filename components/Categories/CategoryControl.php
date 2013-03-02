@@ -8,7 +8,7 @@
  * @date    16.07.12
  */
 
-namespace Flame\CMS\Components\Categories;
+namespace Flame\CMS\PostBundle\Components\Categories;
 
 class CategoryControl extends \Flame\Application\UI\Control
 {

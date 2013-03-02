@@ -36,7 +36,7 @@ class PostFormFactory extends \Nette\Object
 	private $userFacade;
 
 	/**
-	 * @var \Flame\CMS\Models\Categories\CategoryFacade
+	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
 	 */
 	private $categoryFacade;
 
@@ -78,9 +78,9 @@ class PostFormFactory extends \Nette\Object
 	}
 
 	/**
-	 * @param \Flame\CMS\Models\Categories\CategoryFacade $categoryFacade
+	 * @param \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
-	public function injectCategoryFacade(\Flame\CMS\Models\Categories\CategoryFacade $categoryFacade)
+	public function injectCategoryFacade(\Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade)
 	{
 		$this->categoryFacade = $categoryFacade;
 	}
@@ -195,13 +195,13 @@ class PostFormFactory extends \Nette\Object
 
 	/**
 	 * @param $name
-	 * @return \Flame\CMS\Models\Categories\Category|object
+	 * @return \Flame\CMS\PostsBundle\Model\Categories\Category|object
 	 */
 	protected function createNewCategory($name)
 	{
 		if($categoryExist = $this->categoryFacade->getOneByName($name)) return $categoryExist;
 
-		$category = new \Flame\CMS\Models\Categories\Category($name, Strings::createSlug($name));
+		$category = new \Flame\CMS\PostsBundle\Model\Categories\Category($name, Strings::createSlug($name));
 		$this->categoryFacade->save($category);
 		return $category;
 	}

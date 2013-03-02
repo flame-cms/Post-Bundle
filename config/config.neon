@@ -11,9 +11,9 @@ services:
   - \Flame\CMS\PostBundle\Model\PostFacade
   - \Flame\CMS\PostBundle\Forms\PostFormFactory
 
-  - Flame\CMS\Models\Categories\CategoryFacade
-  - Flame\CMS\Components\Categories\CategoryControlFactory
-  - \Flame\CMS\AdminModule\Forms\Categories\CategoryFormProcces
+  - Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
+  - Flame\CMS\PostBundle\Components\Categories\CategoryControlFactory
+  - \Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces
 
 factories:
   postControl:
@@ -22,6 +22,6 @@ factories:
     parameters: [array posts]
 
   categoryForm:
-    create: \Flame\CMS\AdminModule\Forms\Categories\CategoryForm(%categories%, %defaults%)
-    implement: \Flame\CMS\AdminModule\Forms\Categories\ICategoryFormFactory
+    create: \Flame\CMS\PostBundle\Forms\Categories\CategoryForm(%categories%, %defaults%)
+    implement: \Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory
     parameters: [array categories, array defaults = []]

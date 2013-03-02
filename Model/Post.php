@@ -12,7 +12,7 @@ namespace Flame\CMS\PostBundle\Model;
 
 use DateTime,
     Flame\CMS\Models\Users\User,
-	Flame\CMS\Models\Categories\Category,
+	Flame\CMS\PostsBundle\Model\Categories\Category,
 	Flame\CMS\TagBundle\Model\Tag;
 
 /**
@@ -53,7 +53,7 @@ class Post extends \Flame\Doctrine\Entity
     protected $content;
 
 	/**
-	 * @ManyToOne(targetEntity="\Flame\CMS\Models\Categories\Category", inversedBy="posts")
+	 * @ManyToOne(targetEntity="\Flame\CMS\PostsBundle\Model\Categories\Category", inversedBy="posts")
 	 * @JoinColumn(onDelete="SET NULL")
 	 */
 	protected $category;

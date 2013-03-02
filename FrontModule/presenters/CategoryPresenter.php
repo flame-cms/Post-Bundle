@@ -20,13 +20,13 @@ class CategoryPresenter extends \Flame\CMS\FrontModule\FrontPresenter
 
 	/**
 	 * @autowire
-	 * @var \Flame\CMS\Components\Categories\CategoryControlFactory
+	 * @var \Flame\CMS\PostBundle\Components\Categories\CategoryControlFactory
 	 */
 	protected $categoryControlFactory;
 
 	/**
 	 * @autowire
-	 * @var \Flame\CMS\Models\Categories\CategoryFacade
+	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
 	 */
 	protected $categoryFacade;
 

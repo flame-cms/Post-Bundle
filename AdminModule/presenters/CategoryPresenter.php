@@ -14,45 +14,45 @@ class CategoryPresenter extends AdminPresenter
 {
 
 	/**
-	 * @var \Flame\CMS\Models\Categories\Category
+	 * @var \Flame\CMS\PostsBundle\Model\Categories\Category
 	 */
 	private $category;
 
 	/**
-	 * @var \Flame\CMS\Models\Categories\CategoryFacade
+	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
 	 */
 	private $categoryFacade;
 
 	/**
-	 * @var \Flame\CMS\AdminModule\Forms\Categories\ICategoryFormFactory $categoryFormFactory
+	 * @var \Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory $categoryFormFactory
 	 */
 	private $categoryFormFactory;
 
 	/**
-	 * @var \Flame\CMS\AdminModule\Forms\Categories\CategoryFormProcces $categoryFormProcces
+	 * @var \Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces $categoryFormProcces
 	 */
 	private $categoryFormProcces;
 
 	/**
-	 * @param \Flame\CMS\AdminModule\Forms\Categories\CategoryFormProcces $categoryFormProcces
+	 * @param \Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces $categoryFormProcces
 	 */
-	public function injectCategoryFormProcces(\Flame\CMS\AdminModule\Forms\Categories\CategoryFormProcces $categoryFormProcces)
+	public function injectCategoryFormProcces(\Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces $categoryFormProcces)
 	{
 		$this->categoryFormProcces = $categoryFormProcces;
 	}
 
 	/**
-	 * @param \Flame\CMS\AdminModule\Forms\Categories\ICategoryFormFactory $categoryFormFactory
+	 * @param \Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory $categoryFormFactory
 	 */
-	public function injectCategoryFormFactory(\Flame\CMS\AdminModule\Forms\Categories\ICategoryFormFactory $categoryFormFactory)
+	public function injectCategoryFormFactory(\Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory $categoryFormFactory)
 	{
 		$this->categoryFormFactory = $categoryFormFactory;
 	}
 
 	/**
-	 * @param \Flame\CMS\Models\Categories\CategoryFacade $categoryFacade
+	 * @param \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
-	public function injectCategoryFacade(\Flame\CMS\Models\Categories\CategoryFacade $categoryFacade)
+	public function injectCategoryFacade(\Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade)
 	{
 		$this->categoryFacade = $categoryFacade;
 	}
@@ -94,7 +94,7 @@ class CategoryPresenter extends AdminPresenter
 	/**
 	 * @param Forms\Categories\CategoryForm $form
 	 */
-	public function formSubmitted(\Flame\CMS\AdminModule\Forms\Categories\CategoryForm $form)
+	public function formSubmitted(\Flame\CMS\PostBundle\Forms\Categories\CategoryForm $form)
 	{
 		if($this->category){
 			$this->categoryFormProcces->edit($form, $this->category);

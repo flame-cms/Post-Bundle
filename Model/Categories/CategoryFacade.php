@@ -8,7 +8,7 @@
  * @date    14.07.12
  */
 
-namespace Flame\CMS\Models\Categories;
+namespace Flame\CMS\PostsBundle\Model\Categories;
 
 class CategoryFacade extends \Flame\Doctrine\Model\Facade
 {
@@ -16,7 +16,7 @@ class CategoryFacade extends \Flame\Doctrine\Model\Facade
 	/**
 	 * @var string
 	 */
-	protected $repositoryName = '\Flame\CMS\Models\Categories\Category';
+	protected $repositoryName = '\Flame\CMS\PostsBundle\Model\Categories\Category';
 
 	/**
 	 * @param $id

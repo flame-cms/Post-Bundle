@@ -8,10 +8,10 @@
  * @date    14.07.12
  */
 
-namespace Flame\CMS\Models\Categories;
+namespace Flame\CMS\PostsBundle\Model\Categories;
 
 /**
- * @Entity(repositoryClass="CategoryRepository")
+ * @Entity
  */
 class Category extends \Flame\Doctrine\Entity
 {

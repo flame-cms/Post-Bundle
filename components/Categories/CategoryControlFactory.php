@@ -8,20 +8,20 @@
  * @date    21.10.12
  */
 
-namespace Flame\CMS\Components\Categories;
+namespace Flame\CMS\PostBundle\Components\Categories;
 
 class CategoryControlFactory extends \Nette\Object
 {
 
 	/**
-	 * @var \Flame\CMS\Models\Categories\CategoryFacade $categoryFacade
+	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
 	private $categoryFacade;
 
 	/**
-	 * @param \Flame\CMS\Models\Categories\CategoryFacade $categoryFacade
+	 * @param \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
-	public function injectCategoryFacade(\Flame\CMS\Models\Categories\CategoryFacade $categoryFacade)
+	public function injectCategoryFacade(\Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade)
 	{
 		$this->categoryFacade = $categoryFacade;
 	}

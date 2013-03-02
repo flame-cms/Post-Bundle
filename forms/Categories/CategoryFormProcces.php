@@ -8,7 +8,7 @@
  * @date    24.11.12
  */
 
-namespace Flame\CMS\AdminModule\Forms\Categories;
+namespace Flame\CMS\PostBundle\Forms\Categories;
 
 use Flame\Utils\Strings;
 
@@ -16,23 +16,23 @@ class CategoryFormProcces extends \Nette\Object
 {
 
 	/**
-	 * @var \Flame\CMS\Models\Categories\CategoryFacade $categoryFacade
+	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
 	private $categoryFacade;
 
 	/**
-	 * @param \Flame\CMS\Models\Categories\CategoryFacade $categoryFacade
+	 * @param \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
-	public function injectCategoryFacade(\Flame\CMS\Models\Categories\CategoryFacade $categoryFacade)
+	public function injectCategoryFacade(\Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade)
 	{
 		$this->categoryFacade = $categoryFacade;
 	}
 
 	/**
 	 * @param CategoryForm $form
-	 * @param \Flame\CMS\Models\Categories\Category $category
+	 * @param \Flame\CMS\PostsBundle\Model\Categories\Category $category
 	 */
-	public function edit(CategoryForm $form, \Flame\CMS\Models\Categories\Category $category)
+	public function edit(CategoryForm $form, \Flame\CMS\PostsBundle\Model\Categories\Category $category)
 	{
 		$values = $form->getValues();
 		$slug = $this->createSlug($values);
@@ -60,7 +60,7 @@ class CategoryFormProcces extends \Nette\Object
 		if($this->categoryFacade->getOneByName($values['name'])){
 			$this->flashMessage('Category with name "' . $values['name'] . '" exist.');
 		}else{
-			$category = new \Flame\CMS\Models\Categories\Category($values['name'], $slug);
+			$category = new \Flame\CMS\PostsBundle\Model\Categories\Category($values['name'], $slug);
 			$category->setDescription($values['description']);
 
 			if($parent = $this->categoryFacade->getOne($values['parent'])){

@@ -8,7 +8,7 @@
  * @date    15.07.12
  */
 
-namespace Flame\CMS\AdminModule\Forms\Categories;
+namespace Flame\CMS\PostBundle\Forms\Categories;
 
 class CategoryForm extends \Flame\CMS\PostBundle\Application\UI\Form
 {
