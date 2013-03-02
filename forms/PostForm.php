@@ -10,7 +10,7 @@
 
 namespace Flame\CMS\PostBundle\Forms;
 
-class PostForm extends \Flame\Application\UI\Form
+class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 {
 
 	/**
@@ -22,13 +22,6 @@ class PostForm extends \Flame\Application\UI\Form
 	 * @var array
 	 */
 	private $tags;
-
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->setRenderer(new \Kdyby\BootstrapFormRenderer\BootstrapRenderer);
-	}
 
 	/**
 	 * @param array $categories
