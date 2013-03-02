@@ -1,0 +1,14 @@
+
+{#listExcept}
+
+	<div class="post-box" n:foreach="$posts as $post">
+		<h2><a href="{plink Post: $post->id, slug => $post->slug}"> {$post->name}</a></h2>
+
+		{!$post->content|striptags|truncate:450}
+		<a href="{plink Post: $post->id, slug => $post->slug}">Read more &raquo</a>
+		<hr>
+	</div>
+
+	{control paginator}
+
+{/#}

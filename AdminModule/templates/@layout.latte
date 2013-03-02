@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<meta name="robots" content="noindex,nofollow">
+
+	<title>{#title|striptags}Flame CMS{/#} &ndash; Administration</title>
+
+	<link rel="stylesheet" style="text/css" href="{$baseUrl}/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" style="text/css" href="{$baseUrl}/bootstrap/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" style="text/css" href="{$baseUrl}/css/admin.css" />
+	
+	<link rel="shortcut icon" href="{$baseUrl}/favicon.ico" type="image/x-icon">
+
+	<script type="text/javascript" src="{$baseUrl}/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="{$baseUrl}/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{$baseUrl}/js/netteForms.js"></script>
+	<script type="text/javascript" src="{$baseUrl}/js/ajax.js"></script>
+	<script type="text/javascript" src="{$baseUrl}/js/createSlug.js"></script>
+
+	{#head}{/#}
+</head>
+
+<body>
+
+	{control navbarBuilder}
+
+	<div class="container">
+		<ul style="margin-top: 60px;" class="breadcrumb">
+		{foreach $breadCrumbs as $breadcrumb}
+			{if $iterator->last}
+				<li class="active">{$breadcrumb}</li>
+				{else}
+				<li><a>{$breadcrumb}</a> <span class="divider">/</span></li>
+			{/if}
+		{/foreach}
+		</ul>
+
+		{snippet flashMessages}
+		<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">
+			<a class="close" data-dismiss="alert" href="#">×</a>
+			<h4 class="alert-heading">{$flash->message}</h4>
+		</div>
+		{/snippet}
+
+		{include #content}
+
+        <hr />
+        <footer>
+            <p>Powered by <a href="http://projects.jsifalda.name/flame/" target="_blank">Flame</a> 2012.
+                &copy; Created by <a href="http://jsifalda.name/" target="_blank">JSifalda</a></p>
+        </footer>
+	</div>
+
+</body>
+</html>
