@@ -1,6 +1,6 @@
 <?php
 
-namespace Flame\CMS\Components\Posts;
+namespace Flame\CMS\PostBundle\Components;
 
 class PostControl extends \Flame\Application\UI\Control
 {

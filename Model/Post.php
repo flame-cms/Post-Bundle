@@ -8,7 +8,7 @@
  * @date    10.07.12
  */
 
-namespace Flame\CMS\Models\Posts;
+namespace Flame\CMS\PostBundle\Model;
 
 use DateTime,
     Flame\CMS\Models\Users\User,

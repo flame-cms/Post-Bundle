@@ -8,7 +8,7 @@
  * @date    15.12.12
  */
 
-namespace Flame\CMS\Components\Posts;
+namespace Flame\CMS\PostBundle\Components;
 
 interface IPostControlFactory
 {

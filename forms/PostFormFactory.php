@@ -8,7 +8,7 @@
  * @date    13.11.12
  */
 
-namespace Flame\CMS\AdminModule\Forms\Posts;
+namespace Flame\CMS\PostBundle\Forms;
 
 use Flame\Utils\Strings;
 
@@ -16,7 +16,7 @@ class PostFormFactory extends \Nette\Object
 {
 
 	/**
-	 * @var \Flame\CMS\Models\Posts\Post
+	 * @var \Flame\CMS\PostBundle\Model\Post
 	 */
 	private $post;
 
@@ -26,7 +26,7 @@ class PostFormFactory extends \Nette\Object
 	private $tagFacade;
 
 	/**
-	 * @var \Flame\CMS\Models\Posts\PostFacade
+	 * @var \Flame\CMS\PostBundle\Model\PostFacade
 	 */
 	private $postFacade;
 
@@ -62,9 +62,9 @@ class PostFormFactory extends \Nette\Object
 	}
 
 	/**
-	 * @param \Flame\CMS\Models\Posts\PostFacade $postFacade
+	 * @param \Flame\CMS\PostBundle\Model\PostFacade $postFacade
 	 */
-	public function injectPostFacade(\Flame\CMS\Models\Posts\PostFacade $postFacade)
+	public function injectPostFacade(\Flame\CMS\PostBundle\Model\PostFacade $postFacade)
 	{
 		$this->postFacade = $postFacade;
 	}
@@ -171,7 +171,7 @@ class PostFormFactory extends \Nette\Object
 				$f->presenter->flashMessage('Post was edited');
 
 			}else{
-				$post = new \Flame\CMS\Models\Posts\Post(
+				$post = new \Flame\CMS\PostBundle\Model\Post(
 					$this->userFacade->getOne($this->user->getId()),
 					$values['name'],
 					$slug,

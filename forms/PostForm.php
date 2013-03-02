@@ -8,9 +8,9 @@
  * @date    14.07.12
  */
 
-namespace Flame\CMS\AdminModule\Forms\Posts;
+namespace Flame\CMS\PostBundle\Forms;
 
-class PostForm extends \Flame\CMS\AppModule\Application\UI\Form
+class PostForm extends \Flame\Application\UI\Form
 {
 
 	/**
@@ -22,6 +22,13 @@ class PostForm extends \Flame\CMS\AppModule\Application\UI\Form
 	 * @var array
 	 */
 	private $tags;
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->setRenderer(new \Kdyby\BootstrapFormRenderer\BootstrapRenderer);
+	}
 
 	/**
 	 * @param array $categories

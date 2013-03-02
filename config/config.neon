@@ -8,11 +8,11 @@ parameters:
   entities: [%appDir%/PostBundle/Model]
 
 services:
-  - \Flame\CMS\Models\Posts\PostFacade
-  - \Flame\CMS\AdminModule\Forms\Posts\PostFormFactory
+  - \Flame\CMS\PostBundle\Model\PostFacade
+  - \Flame\CMS\PostBundle\Forms\PostFormFactory
 
 factories:
   postControl:
-    create: \Flame\CMS\Components\Posts\PostControl(%posts%)
-    implement: \Flame\CMS\Components\Posts\IPostControlFactory
+    create: \Flame\CMS\PostBundle\Components\PostControl(%posts%)
+    implement: \Flame\CMS\PostBundle\Components\IPostControlFactory
     parameters: [array posts]

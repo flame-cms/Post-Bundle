@@ -8,7 +8,7 @@
  * @date    10.07.12
  */
 
-namespace Flame\CMS\Models\Posts;
+namespace Flame\CMS\PostBundle\Model;
 
 class PostFacade extends \Flame\Doctrine\Model\Facade
 {
@@ -16,7 +16,7 @@ class PostFacade extends \Flame\Doctrine\Model\Facade
 	/**
 	 * @var string
 	 */
-	protected $repositoryName = '\Flame\CMS\Models\Posts\Post';
+	protected $repositoryName = '\Flame\CMS\PostBundle\Model\Post';
 
 	/**
 	 * @param $id

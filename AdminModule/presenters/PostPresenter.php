@@ -9,7 +9,7 @@ class PostPresenter extends AdminPresenter
 {
 
 	/**
-	 * @var \Flame\CMS\Models\Posts\Post
+	 * @var \Flame\CMS\PostBundle\Model\Post
 	 */
     private $post;
 
@@ -19,27 +19,27 @@ class PostPresenter extends AdminPresenter
 	private $fileUploaderControlFactory;
 
 	/**
-	 * @var \Flame\CMS\Models\Posts\PostFacade $postFacade
+	 * @var \Flame\CMS\PostBundle\Model\PostFacade $postFacade
 	 */
 	private $postFacade;
 
 	/**
-	 * @var \Flame\CMS\AdminModule\Forms\Posts\PostFormFactory $postFormFactory
+	 * @var \Flame\CMS\PostBundle\Forms\PostFormFactory $postFormFactory
 	 */
 	private $postFormFactory;
 
 	/**
-	 * @param \Flame\CMS\AdminModule\Forms\Posts\PostFormFactory $postFormFactory
+	 * @param \Flame\CMS\PostBundle\Forms\PostFormFactory $postFormFactory
 	 */
-	public function injectPostFormFactory(\Flame\CMS\AdminModule\Forms\Posts\PostFormFactory $postFormFactory)
+	public function injectPostFormFactory(\Flame\CMS\PostBundle\Forms\PostFormFactory $postFormFactory)
 	{
 		$this->postFormFactory = $postFormFactory;
 	}
 
 	/**
-	 * @param \Flame\CMS\Models\Posts\PostFacade $postFacade
+	 * @param \Flame\CMS\PostBundle\Model\PostFacade $postFacade
 	 */
-	public function injectPostFacade(\Flame\CMS\Models\Posts\PostFacade $postFacade)
+	public function injectPostFacade(\Flame\CMS\PostBundle\Model\PostFacade $postFacade)
 	{
 		$this->postFacade = $postFacade;
 	}

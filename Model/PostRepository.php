@@ -8,7 +8,7 @@
  * @date    10.07.12
  */
 
-namespace Flame\CMS\Models\Posts;
+namespace Flame\CMS\PostBundle\Model;
 
 class PostRepository extends \Flame\Doctrine\Model\Repository
 {
@@ -20,7 +20,7 @@ class PostRepository extends \Flame\Doctrine\Model\Repository
 	 */
 	public function findAllQuery($first, $limit)
 	{
-		$sql = 'Select p from Flame\CMS\Models\Posts\Post p order by p.id DESC';
+		$sql = 'Select p from Flame\CMS\PostBundle\Model\Post p order by p.id DESC';
 		return $this->_em->createQuery($sql)->setFirstResult($first)->setMaxResults($limit);
 	}
 
@@ -31,7 +31,7 @@ class PostRepository extends \Flame\Doctrine\Model\Repository
 	 */
 	public function findPublishedQuery($first, $limit)
 	{
-		$sql = 'Select p from Flame\CMS\Models\Posts\Post p where p.publish=1 order by p.id DESC';
+		$sql = 'Select p from Flame\CMS\PostBundle\Model\Post p where p.publish=1 order by p.id DESC';
 		return $this->_em->createQuery($sql)->setFirstResult($first)->setMaxResults($limit);
 	}
 
