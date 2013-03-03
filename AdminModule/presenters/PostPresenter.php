@@ -19,30 +19,28 @@ class PostPresenter extends AdminPresenter
 	private $fileUploaderControlFactory;
 
 	/**
-	 * @var \Flame\CMS\PostBundle\Model\PostFacade $postFacade
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Model\PostFacade
 	 */
-	private $postFacade;
+	protected $postFacade;
 
 	/**
-	 * @var \Flame\CMS\PostBundle\Forms\PostFormFactory $postFormFactory
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Forms\IPostFormFactory
 	 */
-	private $postFormFactory;
+	protected $postFormFactory;
 
 	/**
-	 * @param \Flame\CMS\PostBundle\Forms\PostFormFactory $postFormFactory
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Model\Categories\CategoryFacade
 	 */
-	public function injectPostFormFactory(\Flame\CMS\PostBundle\Forms\PostFormFactory $postFormFactory)
-	{
-		$this->postFormFactory = $postFormFactory;
-	}
+	protected $categoryFacade;
 
 	/**
-	 * @param \Flame\CMS\PostBundle\Model\PostFacade $postFacade
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Model\Tags\TagFacade
 	 */
-	public function injectPostFacade(\Flame\CMS\PostBundle\Model\PostFacade $postFacade)
-	{
-		$this->postFacade = $postFacade;
-	}
+	protected $tagFacade;
 
 	public function renderDefault()
 	{
@@ -115,30 +113,35 @@ class PostPresenter extends AdminPresenter
 	}
 
 	/**
-	 * @param $id
+	 * @param null $id
 	 */
-	public function actionEdit($id)
+	public function actionUpdate($id = null)
 	{
-        if(!$this->post = $this->postFacade->getOne($id)){
-	        $this->flashMessage('Post does not exist.');
-            $this->redirect('default');
-        }
+        $this->post = $this->postFacade->getOne($id);
+		$this->template->post = $this->post;
 
 	}
 
 	/**
-	 * @return \Nette\Application\UI\Form
+	 * @return \Flame\CMS\PostBundle\Forms\PostForm
 	 */
 	protected function createComponentPostForm()
 	{
 
-		$form = $this->postFormFactory->configure($this->post)->createForm();
+		$default = array();
+		if($this->post instanceof \Flame\CMS\PostBundle\Model\Post)
+			$default = $this->post->toArray();
+
+		$form = $this->postFormFactory->create($default);
+		$form->setCategories($this->categoryFacade->getLastCategories());
+		$form->setTags($this->tagFacade->getLastTags());
 
 		if($this->post){
 			$form->onSuccess[] = $this->lazyLink('this');
 		}else{
 			$form->onSuccess[] = $this->lazyLink('default');
 		}
+
         return $form;
 	}
 

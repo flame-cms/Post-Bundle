@@ -21,7 +21,7 @@ class PostFormFactory extends \Nette\Object
 	private $post;
 
 	/**
-	 * @var \Flame\CMS\TagBundle\Model\TagFacade
+	 * @var \Flame\CMS\PostBundle\Model\Tags\TagFacade
 	 */
 	private $tagFacade;
 
@@ -31,12 +31,12 @@ class PostFormFactory extends \Nette\Object
 	private $postFacade;
 
 	/**
-	 * @var \Flame\CMS\Models\Users\UserFacade
+	 * @var \Flame\CMS\UserBundle\Model\UserFacade
 	 */
 	private $userFacade;
 
 	/**
-	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
+	 * @var \Flame\CMS\PostBundle\Model\Categories\CategoryFacade
 	 */
 	private $categoryFacade;
 
@@ -54,9 +54,9 @@ class PostFormFactory extends \Nette\Object
 	}
 
 	/**
-	 * @param \Flame\CMS\TagBundle\Model\TagFacade $tagFacade
+	 * @param \Flame\CMS\PostBundle\Model\Tags\TagFacade $tagFacade
 	 */
-	public function injectTagFacade(\Flame\CMS\TagBundle\Model\TagFacade $tagFacade)
+	public function injectTagFacade(\Flame\CMS\PostBundle\Model\Tags\TagFacade $tagFacade)
 	{
 		$this->tagFacade = $tagFacade;
 	}
@@ -70,17 +70,17 @@ class PostFormFactory extends \Nette\Object
 	}
 
 	/**
-	 * @param \Flame\CMS\Models\Users\UserFacade $userFacade
+	 * @param \Flame\CMS\UserBundle\Model\UserFacade $userFacade
 	 */
-	public function injectUserFacade(\Flame\CMS\Models\Users\UserFacade $userFacade)
+	public function injectUserFacade(\Flame\CMS\UserBundle\Model\UserFacade $userFacade)
 	{
 		$this->userFacade = $userFacade;
 	}
 
 	/**
-	 * @param \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
+	 * @param \Flame\CMS\PostBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
-	public function injectCategoryFacade(\Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade)
+	public function injectCategoryFacade(\Flame\CMS\PostBundle\Model\Categories\CategoryFacade $categoryFacade)
 	{
 		$this->categoryFacade = $categoryFacade;
 	}
@@ -195,26 +195,26 @@ class PostFormFactory extends \Nette\Object
 
 	/**
 	 * @param $name
-	 * @return \Flame\CMS\PostsBundle\Model\Categories\Category|object
+	 * @return \Flame\CMS\PostBundle\Model\Categories\Category|object
 	 */
 	protected function createNewCategory($name)
 	{
 		if($categoryExist = $this->categoryFacade->getOneByName($name)) return $categoryExist;
 
-		$category = new \Flame\CMS\PostsBundle\Model\Categories\Category($name, Strings::createSlug($name));
+		$category = new \Flame\CMS\PostBundle\Model\Categories\Category($name, Strings::createSlug($name));
 		$this->categoryFacade->save($category);
 		return $category;
 	}
 
 	/**
 	 * @param $name
-	 * @return \Flame\CMS\TagBundle\Model\Tag|object
+	 * @return \Flame\CMS\PostBundle\Model\Tags\Tag|object
 	 */
 	protected function createNewTag($name)
 	{
 		if($tagExist = $this->tagFacade->getOneByName($name)) return $tagExist;
 
-		$tag = new \Flame\CMS\TagBundle\Model\Tag($name, Strings::createSlug($name));
+		$tag = new \Flame\CMS\PostBundle\Model\Tags\Tag($name, Strings::createSlug($name));
 		$this->tagFacade->save($tag);
 		return $tag;
 	}

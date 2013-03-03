@@ -13,22 +13,54 @@ namespace Flame\CMS\PostBundle\Forms;
 class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 {
 
-	/**
-	 * @var array
-	 */
-	private $categories;
+	/** @var \Flame\CMS\PostBundle\Model\PostManager */
+	private $postManager;
 
 	/**
-	 * @var array
+	 * @param \Flame\CMS\PostBundle\Model\PostManager $postManager
 	 */
-	private $tags;
+	public function injectPostManager(\Flame\CMS\PostBundle\Model\PostManager $postManager)
+	{
+		$this->postManager = $postManager;
+	}
+
+	public function __construct(array $default = array())
+	{
+		parent::__construct();
+
+		$this->configure();
+
+		if(count($default)){
+			$this->setDefaults($this->prepareDefaultValues($default));
+			$this->addSubmit('send', 'Edit post')
+				->setAttribute('class', 'btn-primary');
+		}else{
+			$this->setDefaults(array('publish' => true));
+			$this->addSubmit('send', 'Create post')
+				->setAttribute('class', 'btn-primary');
+		}
+		$this->onSuccess[] = $this->formSubmitted;
+	}
+
+	/**
+	 * @param PostForm $form
+	 */
+	public function formSubmitted(PostForm $form)
+	{
+		try {
+			$this->postManager->update($form->getValues());
+			$form->presenter->flashMessage('Post management was successful', 'success');
+		}catch (\Nette\InvalidArgumentException $ex){
+			$form->addError($ex->getMessage());
+		}
+	}
 
 	/**
 	 * @param array $categories
 	 */
 	public function setCategories(array $categories)
 	{
-		$this->categories = $this->prepareForFormItem($categories);
+		$this['category']->setItems($this->prepareForFormItem($categories));
 	}
 
 	/**
@@ -36,26 +68,7 @@ class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 	 */
 	public function setTags(array $tags)
 	{
-		$this->tags = $this->prepareForFormItem($tags);
-	}
-
-	public function configureAdd()
-	{
-		$this->configure();
-		$this->setDefaults(array('publish' => true));
-		$this->addSubmit('send', 'Create post');
-
-	}
-
-	/**
-	 * @param array $defaults
-	 */
-	public function configureEdit(array $defaults)
-	{
-		$this->configure();
-		$this->setDefaults($this->prepareDefaultValues($defaults));
-		$this->addSubmit('send', 'Edit post');
-
+		$this['tags']->setItems($this->prepareForFormItem($tags));
 	}
 
 	private function configure()
@@ -83,25 +96,18 @@ class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 
 		$this->addGroup('Category');
 
-		if($this->categories){
-			$this->addSelect('category', 'Category:', $this->categories)
-				->setPrompt('-- Select one --')
-				->setOption('description', 'Select category or create new below.');
+		$this->addSelect('category', 'Category:')
+			->setPrompt('-- Select one --')
+			->setOption('description', 'Select category or create new below.');
 
-			$this->addText('categoryNew', 'Create new category', 80)
-				->setAttribute('placeholder', 'Write name of new category');
-		}else{
-			$this->addText('categoryNew', 'Create new category', 80)
-				->addRule(self::FILLED)
-				->setAttribute('placeholder', 'Write name of new category');
-		}
+		$this->addText('categoryNew', 'Create new category', 80)
+			->setAttribute('placeholder', 'Write name of new category');
 
 		$this->addGroup('Tags');
 
-		if($this->tags){
-			$this->addMultiSelect('tags', 'Tags:', $this->tags, count($this->tags))
-				->setAttribute('class', 'tags-multiSelect');
-		}
+
+		$this->addMultiSelect('tags', 'Tags:')
+			->setAttribute('class', 'tags-multiSelect');
 
 		$this->addText('tagsNew', 'Create new tags', 100)
 			->setOption('description', 'Tags split with commas')

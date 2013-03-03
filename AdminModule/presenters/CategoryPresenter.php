@@ -14,48 +14,27 @@ class CategoryPresenter extends AdminPresenter
 {
 
 	/**
-	 * @var \Flame\CMS\PostsBundle\Model\Categories\Category
+	 * @var \Flame\CMS\PostBundle\Model\Categories\Category
 	 */
 	private $category;
 
 	/**
-	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Model\Categories\CategoryFacade
 	 */
-	private $categoryFacade;
+	protected $categoryFacade;
 
 	/**
-	 * @var \Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory $categoryFormFactory
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory
 	 */
-	private $categoryFormFactory;
+	protected $categoryFormFactory;
 
 	/**
-	 * @var \Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces $categoryFormProcces
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Model\Categories\CategoryManager
 	 */
-	private $categoryFormProcces;
-
-	/**
-	 * @param \Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces $categoryFormProcces
-	 */
-	public function injectCategoryFormProcces(\Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces $categoryFormProcces)
-	{
-		$this->categoryFormProcces = $categoryFormProcces;
-	}
-
-	/**
-	 * @param \Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory $categoryFormFactory
-	 */
-	public function injectCategoryFormFactory(\Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory $categoryFormFactory)
-	{
-		$this->categoryFormFactory = $categoryFormFactory;
-	}
-
-	/**
-	 * @param \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
-	 */
-	public function injectCategoryFacade(\Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade)
-	{
-		$this->categoryFacade = $categoryFacade;
-	}
+	protected $categoryManager;
 
 	public function renderDefault()
 	{
@@ -65,42 +44,31 @@ class CategoryPresenter extends AdminPresenter
 	/**
 	 * @param $id
 	 */
-	public function actionEdit($id)
+	public function actionUpdate($id = null)
 	{
-		if(!$this->category = $this->categoryFacade->getOne($id)){
-			$this->flashMessage('Category does not exist!');
-			$this->redirect('Category:');
-		}
-
+		$this->category = $this->categoryFacade->getOne($id);
 		$this->template->category = $this->category;
 	}
 
 	/**
-	 * @return Forms\Categories\CategoryForm
+	 * @return \Flame\CMS\PostBundle\Forms\Categories\CategoryForm
 	 */
 	protected function createComponentCategoryForm()
 	{
+		$default = array();
+		if($this->category instanceof \Flame\CMS\PostBundle\Model\Categories\Category)
+			$default = $this->category->toArray();
 
-		$form = $this->categoryFormFactory->create(
-			$this->categoryFacade->getLastCategories(),
-			$this->category ? $this->category->toArray() : array()
-		);
+		$form = $this->categoryFormFactory->create($default);
+		$form->setCategories($this->categoryFacade->getLastCategories());
 
-		$form->onSuccess[] = $this->formSubmitted;
-		$form->onSuccess[] = $this->lazyLink('default');
-		return $form;
-	}
-
-	/**
-	 * @param Forms\Categories\CategoryForm $form
-	 */
-	public function formSubmitted(\Flame\CMS\PostBundle\Forms\Categories\CategoryForm $form)
-	{
 		if($this->category){
-			$this->categoryFormProcces->edit($form, $this->category);
+			$form->onSuccess[] = $this->lazyLink('this');
 		}else{
-			$this->categoryFormProcces->add($form);
+			$form->onSuccess[] = $this->lazyLink('default');
 		}
+
+		return $form;
 	}
 
 	/**
@@ -111,20 +79,13 @@ class CategoryPresenter extends AdminPresenter
 		if(!$this->getUser()->isAllowed('Admin:Category', 'delete')){
 			$this->flashMessage('Access denied');
 		}else{
-			$category = $this->categoryFacade->getOne($id);
-
-			if($category){
-				$this->categoryFacade->delete($category);
-
-			}else{
-				$this->flashMessage('Category does not exist.');
+			try {
+				$this->categoryManager->delete($id);
+			}catch (\Nette\InvalidArgumentException $ex){
+				$this->presenter->flashMessage($ex->getMessage());
 			}
 		}
 
-		if($this->isAjax()){
-			$this->invalidateControl();
-		}else{
-			$this->redirect('this');
-		}
+		$this->redirect('this');
 	}
 }

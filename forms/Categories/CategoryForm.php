@@ -12,27 +12,56 @@ namespace Flame\CMS\PostBundle\Forms\Categories;
 
 class CategoryForm extends \Flame\CMS\PostBundle\Application\UI\Form
 {
-	/**
-	 * @var array
-	 */
-	private $categories;
+
+	/** @var \Flame\CMS\PostBundle\Model\Categories\CategoryManager */
+	private $categoryManager;
 
 	/**
-	 * @param array $categories
-	 * @param array $defaults
+	 * @param \Flame\CMS\PostBundle\Model\Categories\CategoryManager $categoryManager
 	 */
-	public function __construct(array $categories, array $defaults = array())
+	public function injectCategoryManager(\Flame\CMS\PostBundle\Model\Categories\CategoryManager $categoryManager)
+	{
+		$this->categoryManager = $categoryManager;
+	}
+
+	/**
+	 * @param array $default
+	 */
+	public function __construct(array $default = array())
 	{
 		parent::__construct();
 
-		$this->categories = $this->prepareForFormItem($categories);
 		$this->configure();
 
-		if(count($defaults)){
-			$this->setDefaults($defaults);
-			$this->addSubmit('send', 'Edit');
+		if(count($default)){
+			$this->setDefaults($default);
+			$this->addSubmit('send', 'Edit')
+				->setAttribute('class', 'btn-primary');
 		}else{
-			$this->addSubmit('send', 'Add');
+			$this->addSubmit('send', 'Add')
+				->setAttribute('class', 'btn-primary');
+		}
+		$this->onSuccess[] = $this->formSubmitted;
+	}
+
+	/**
+	 * @param array $categories
+	 */
+	public function setCategories(array $categories)
+	{
+		$this['parent']->setItems($this->prepareForFormItem($categories));
+	}
+
+	/**
+	 * @param CategoryForm $form
+	 */
+	public function formSubmitted(CategoryForm $form)
+	{
+		try{
+			$this->categoryManager->update($form->getValues());
+			$form->presenter->flashMessage('Category management was successful', 'success');
+		}catch (\Nette\InvalidArgumentException $ex){
+			$form->addError($ex->getMessage());
 		}
 	}
 
@@ -45,7 +74,7 @@ class CategoryForm extends \Flame\CMS\PostBundle\Application\UI\Form
 		$this->addText('slug', 'Slug:', 50)
 			->addRule(self::MAX_LENGTH, null, 100);
 
-		$this->addSelect('parent', 'In category:', $this->categories)
+		$this->addSelect('parent', 'In category:')
 			->setPrompt('-- No parent category --');
 
 		$this->addTextArea('description', 'Description')

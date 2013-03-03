@@ -26,7 +26,7 @@ class CategoryPresenter extends \Flame\CMS\FrontModule\FrontPresenter
 
 	/**
 	 * @autowire
-	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
+	 * @var \Flame\CMS\PostBundle\Model\Categories\CategoryFacade
 	 */
 	protected $categoryFacade;
 

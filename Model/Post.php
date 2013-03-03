@@ -11,9 +11,9 @@
 namespace Flame\CMS\PostBundle\Model;
 
 use DateTime,
-    Flame\CMS\Models\Users\User,
-	Flame\CMS\PostsBundle\Model\Categories\Category,
-	Flame\CMS\TagBundle\Model\Tag;
+    Flame\CMS\UserBundle\Model\User,
+	Flame\CMS\PostBundle\Model\Categories\Category,
+	Flame\CMS\PostBundle\Model\Tags\Tag;
 
 /**
  * @Entity(repositoryClass="PostRepository")
@@ -22,7 +22,7 @@ class Post extends \Flame\Doctrine\Entity
 {
 
     /**
-     * @ManyToOne(targetEntity="\Flame\CMS\Models\Users\User")
+     * @ManyToOne(targetEntity="\Flame\CMS\UserBundle\Model\User")
      * @JoinColumn(onDelete="SET NULL")
      */
     protected $user;
@@ -53,13 +53,13 @@ class Post extends \Flame\Doctrine\Entity
     protected $content;
 
 	/**
-	 * @ManyToOne(targetEntity="\Flame\CMS\PostsBundle\Model\Categories\Category", inversedBy="posts")
+	 * @ManyToOne(targetEntity="\Flame\CMS\PostBundle\Model\Categories\Category", inversedBy="posts")
 	 * @JoinColumn(onDelete="SET NULL")
 	 */
 	protected $category;
 
 	/**
-	 * @ManyToMany(targetEntity="\Flame\CMS\TagBundle\Model\Tag", inversedBy="posts")
+	 * @ManyToMany(targetEntity="\Flame\CMS\PostBundle\Model\Tags\Tag", inversedBy="posts")
 	 * @JoinColumn(onDelete="SET NULL")
 	 */
 	protected $tags;

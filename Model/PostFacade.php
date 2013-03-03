@@ -19,14 +19,6 @@ class PostFacade extends \Flame\Doctrine\Model\Facade
 	protected $repositoryName = '\Flame\CMS\PostBundle\Model\Post';
 
 	/**
-	 * @param $id
-	 * @return mixed
-	 */
-	public function getOne($id){
-		return $this->repository->findOneById($id);
-	}
-
-	/**
 	 * @return array
 	 */
     public function getLastPosts()

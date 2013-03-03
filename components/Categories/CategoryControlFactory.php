@@ -14,14 +14,14 @@ class CategoryControlFactory extends \Nette\Object
 {
 
 	/**
-	 * @var \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
+	 * @var \Flame\CMS\PostBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
 	private $categoryFacade;
 
 	/**
-	 * @param \Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade
+	 * @param \Flame\CMS\PostBundle\Model\Categories\CategoryFacade $categoryFacade
 	 */
-	public function injectCategoryFacade(\Flame\CMS\PostsBundle\Model\Categories\CategoryFacade $categoryFacade)
+	public function injectCategoryFacade(\Flame\CMS\PostBundle\Model\Categories\CategoryFacade $categoryFacade)
 	{
 		$this->categoryFacade = $categoryFacade;
 	}

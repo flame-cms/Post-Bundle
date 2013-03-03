@@ -8,7 +8,7 @@
  * @date    14.07.12
  */
 
-namespace Flame\CMS\PostsBundle\Model\Categories;
+namespace Flame\CMS\PostBundle\Model\Categories;
 
 /**
  * @Entity
@@ -43,7 +43,7 @@ class Category extends \Flame\Doctrine\Entity
 	protected $parent;
 
 	/**
-	 * @OneToMany(targetEntity="\Flame\CMS\Models\Posts\Post", mappedBy="category")
+	 * @OneToMany(targetEntity="\Flame\CMS\PostBundle\Model\Post", mappedBy="category")
 	 */
 	protected $posts;
 
@@ -105,7 +105,7 @@ class Category extends \Flame\Doctrine\Entity
 		return $this->parent;
 	}
 
-	public function setParent(Category $parent)
+	public function setParent(Category $parent = null)
 	{
 		$this->parent = $parent;
 		return $this;

@@ -9,13 +9,21 @@ parameters:
 
 services:
   - \Flame\CMS\PostBundle\Model\PostFacade
-  - \Flame\CMS\PostBundle\Forms\PostFormFactory
+  - \Flame\CMS\PostBundle\Model\PostManager
 
-  - Flame\CMS\PostsBundle\Model\Categories\CategoryFacade
-  - Flame\CMS\PostBundle\Components\Categories\CategoryControlFactory
-  - \Flame\CMS\PostBundle\Forms\Categories\CategoryFormProcces
+  - Flame\CMS\PostBundle\Model\Categories\CategoryFacade
+  - Flame\CMS\PostBundle\Model\Categories\CategoryManager
+
+  - \Flame\CMS\PostBundle\Model\Tags\TagFacade
+  - \Flame\CMS\PostBundle\Components\Tags\TagControlFactory
+  - \Flame\CMS\PostBundle\Model\Tags\TagManager
 
 factories:
+  postForm:
+    create: \Flame\CMS\PostBundle\Forms\PostForm(%default%)
+    implement: \Flame\CMS\PostBundle\Forms\IPostFormFactory
+    parameters: [array default = []]
+
   postControl:
     create: \Flame\CMS\PostBundle\Components\PostControl(%posts%)
     implement: \Flame\CMS\PostBundle\Components\IPostControlFactory
@@ -25,3 +33,8 @@ factories:
     create: \Flame\CMS\PostBundle\Forms\Categories\CategoryForm(%categories%, %defaults%)
     implement: \Flame\CMS\PostBundle\Forms\Categories\ICategoryFormFactory
     parameters: [array categories, array defaults = []]
+
+  tagForm:
+    create: \Flame\CMS\PostBundle\Forms\Tags\TagForm(%default%)
+    implement: \Flame\CMS\PostBundle\Forms\Tags\ITagFormFactory
+    parameters: [array default = []]
