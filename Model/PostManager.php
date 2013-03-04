@@ -56,6 +56,21 @@ class PostManager extends \Flame\Model\Manager
 	}
 
 	/**
+	 * @param $id
+	 * @return bool|mixed
+	 * @throws \Nette\InvalidArgumentException
+	 */
+	public function delete($id)
+	{
+		if($post = $this->postFacade->getOne($id)){
+			return $this->postFacade->delete($post);
+			return true;
+		}else{
+			throw new \Nette\InvalidArgumentException('Post with ID "' . $id . '" does not exist');
+		}
+	}
+
+	/**
 	 * @param Post $post
 	 * @param $values
 	 * @return Post
