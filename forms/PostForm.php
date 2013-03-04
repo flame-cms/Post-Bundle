@@ -16,6 +16,28 @@ class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 	/** @var \Flame\CMS\PostBundle\Model\PostManager */
 	private $postManager;
 
+	/** @var \Flame\CMS\PostBundle\Model\Tags\TagFacade */
+	private $tagFacade;
+
+	/** @var \Flame\CMS\PostBundle\Model\Categories\CategoryFacade */
+	private $categoryFacade;
+
+	/**
+	 * @param \Flame\CMS\PostBundle\Model\Categories\CategoryFacade $categoryFacade
+	 */
+	public function injectCategoryFacade(\Flame\CMS\PostBundle\Model\Categories\CategoryFacade $categoryFacade)
+	{
+		$this->categoryFacade = $categoryFacade;
+	}
+
+	/**
+	 * @param \Flame\CMS\PostBundle\Model\Tags\TagFacade $tagFacade
+	 */
+	public function injectTagFacade(\Flame\CMS\PostBundle\Model\Tags\TagFacade $tagFacade)
+	{
+		$this->tagFacade = $tagFacade;
+	}
+
 	/**
 	 * @param \Flame\CMS\PostBundle\Model\PostManager $postManager
 	 */
@@ -47,8 +69,20 @@ class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 	 */
 	public function formSubmitted(PostForm $form)
 	{
+		$values = $form->getValues();
+
+		$values->category = $this->categoryFacade->getOne($values->category);
+
+		$tags = array();
+		if(count($values->tags)){
+			foreach($values->tags as $tagId){
+				$tags[] = $this->tagFacade->getOne($tagId);
+			}
+		}
+		$values->tags = $tags;
+
 		try {
-			$this->postManager->update($form->getValues());
+			$this->postManager->update($values);
 			$form->presenter->flashMessage('Post management was successful', 'success');
 		}catch (\Nette\InvalidArgumentException $ex){
 			$form->addError($ex->getMessage());
@@ -97,11 +131,11 @@ class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 		$this->addGroup('Category');
 
 		$this->addSelect('category', 'Category:')
-			->setPrompt('-- Select one --')
-			->setOption('description', 'Select category or create new below.');
+			->setPrompt('-- Select one --');
+//			->setOption('description', 'Select category or create new below.');
 
-		$this->addText('categoryNew', 'Create new category', 80)
-			->setAttribute('placeholder', 'Write name of new category');
+//		$this->addText('categoryNew', 'Create new category', 80)
+//			->setAttribute('placeholder', 'Write name of new category');
 
 		$this->addGroup('Tags');
 
@@ -109,9 +143,9 @@ class PostForm extends \Flame\CMS\PostBundle\Application\UI\Form
 		$this->addMultiSelect('tags', 'Tags:')
 			->setAttribute('class', 'tags-multiSelect');
 
-		$this->addText('tagsNew', 'Create new tags', 100)
-			->setOption('description', 'Tags split with commas')
-			->setAttribute('placeholder', 'Write names of new tags');
+//		$this->addText('tagsNew', 'Create new tags', 100)
+//			->setOption('description', 'Tags split with commas')
+//			->setAttribute('placeholder', 'Write names of new tags');
 
 		$this->addGroup('Are you sure?');
 
