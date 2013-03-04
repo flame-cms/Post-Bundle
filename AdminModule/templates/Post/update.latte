@@ -16,5 +16,12 @@
 {/#}
 
 {#content}
+
+	{if $post}
+	<h3>Edit post "{$post}"</h3>
+		{else}
+	<h3>Add new post</h3>
+	{/if}
+
 	{control postForm}
 {/#}
