@@ -34,6 +34,12 @@ class PostPresenter extends AdminPresenter
 	 */
 	protected $tagFacade;
 
+	/**
+	 * @autowire
+	 * @var \Flame\CMS\PostBundle\Model\PostManager
+	 */
+	protected $postManager;
+
 	public function renderDefault()
 	{
 		$paginator = $this['paginator']->getPaginator();
@@ -62,20 +68,14 @@ class PostPresenter extends AdminPresenter
 			$this->flashMessage('Access denied');
 		}else{
 
-			$post = $this->postFacade->getOne($id);
-
-			if($post){
-				$this->postFacade->delete($post);
-			}else{
-				$this->flashMessage('Required post to delete does not exist!');
+			try {
+				$this->postManager->delete($id);
+			}catch (\Nette\InvalidArgumentException $ex){
+				$this->flashMessage($ex->getMessage());
 			}
 		}
 
-		if(!$this->isAjax()){
-			$this->redirect('this');
-		}else{
-			$this->invalidateControl('posts');
-		}
+		$this->redirect('this');
 	}
 
 	/**
