@@ -86,23 +86,14 @@ class PostPresenter extends AdminPresenter
 		if(!$this->getUser()->isAllowed('Admin:Post', 'publish')){
 			$this->flashMessage('Access denied');
 		}else{
-
-			$post = $this->postFacade->getOne($id);
-
-			if($post and (int)$post->getPublish() == 1){
-				$post->setPublish(false);
-                $this->postFacade->save($post);
-			}else{
-                $post->setPublish(true);
-                $this->postFacade->save($post);
+			try {
+				$this->postManager->changePublicState($id);
+			}catch (\Nette\InvalidArgumentException $ex){
+				$this->flashMessage($ex->getMessage());
 			}
 		}
 
-		if(!$this->isAjax()){
-			$this->redirect('this');
-		}else{
-			$this->invalidateControl('posts');
-		}
+		$this->redirect('this');
 	}
 
 	/**
