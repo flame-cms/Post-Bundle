@@ -19,6 +19,9 @@ services:
   - \Flame\CMS\PostBundle\Model\Tags\TagManager
 
 factories:
+  paginatorControl:
+    implement: \Flame\Addons\VisualPaginator\IPaginatorFactory
+
   postForm:
     create: \Flame\CMS\PostBundle\Forms\PostForm(%default%)
     implement: \Flame\CMS\PostBundle\Forms\IPostFormFactory

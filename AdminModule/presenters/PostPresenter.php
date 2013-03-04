@@ -8,27 +8,19 @@ namespace Flame\CMS\AdminModule;
 class PostPresenter extends AdminPresenter
 {
 
+	/** @var int */
+	private $itemsPerPage = 25;
+
 	/**
 	 * @var \Flame\CMS\PostBundle\Model\Post
 	 */
     private $post;
 
 	/**
-	 * @var \Flame\Components\FileUploader\FileUploaderControlFactory $fileUploaderControlFactory
-	 */
-	private $fileUploaderControlFactory;
-
-	/**
 	 * @autowire
 	 * @var \Flame\CMS\PostBundle\Model\PostFacade
 	 */
 	protected $postFacade;
-
-	/**
-	 * @autowire
-	 * @var \Flame\CMS\PostBundle\Forms\IPostFormFactory
-	 */
-	protected $postFormFactory;
 
 	/**
 	 * @autowire
@@ -45,18 +37,19 @@ class PostPresenter extends AdminPresenter
 	public function renderDefault()
 	{
 		$paginator = $this['paginator']->getPaginator();
-		$posts = $this->postFacade->getLastPostsPaginator($paginator->offset, 25);
+		$posts = $this->postFacade->getLastPostsPaginator($paginator->offset, $this->itemsPerPage);
 		$paginator->itemCount = count($posts);
 		$this->template->posts = $posts;
 	}
 
 	/**
+	 * @param \Flame\Addons\VisualPaginator\IPaginatorFactory $paginatorFactory
 	 * @return \Flame\Addons\VisualPaginator\Paginator
 	 */
-	protected function createComponentPaginator()
+	protected function createComponentPaginator(\Flame\Addons\VisualPaginator\IPaginatorFactory $paginatorFactory)
 	{
-		$visualPaginator = new \Flame\Addons\VisualPaginator\Paginator;
-		$visualPaginator->paginator->setItemsPerPage(25);
+		$visualPaginator = $paginatorFactory->create();
+		$visualPaginator->paginator->setItemsPerPage($this->itemsPerPage);
 		return $visualPaginator;
 	}
 
@@ -123,16 +116,17 @@ class PostPresenter extends AdminPresenter
 	}
 
 	/**
+	 * @param \Flame\CMS\PostBundle\Forms\IPostFormFactory $postFormFactory
 	 * @return \Flame\CMS\PostBundle\Forms\PostForm
 	 */
-	protected function createComponentPostForm()
+	protected function createComponentPostForm(\Flame\CMS\PostBundle\Forms\IPostFormFactory $postFormFactory)
 	{
 
 		$default = array();
 		if($this->post instanceof \Flame\CMS\PostBundle\Model\Post)
 			$default = $this->post->toArray();
 
-		$form = $this->postFormFactory->create($default);
+		$form = $postFormFactory->create($default);
 		$form->setCategories($this->categoryFacade->getLastCategories());
 		$form->setTags($this->tagFacade->getLastTags());
 
