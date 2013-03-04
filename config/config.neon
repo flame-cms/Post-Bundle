@@ -7,6 +7,12 @@
 parameters:
   entities: [%appDir%/PostBundle/Model]
 
+webloader:
+  js:
+    default:
+      files:
+        - %appDir%/PostBundle/www/createSlug.js
+
 services:
   - \Flame\CMS\PostBundle\Model\PostFacade
   - \Flame\CMS\PostBundle\Model\PostManager
