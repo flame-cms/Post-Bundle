@@ -1,0 +1,21 @@
+{
+	"name": "flame-cms/post-bundle",
+	"type": "nette-bundle",
+	"description": "Post bundle",
+	"keywords": ["post bundle", "nette"],
+	"homepage": "https://github.com/flame-cms/Post-Bundle",
+	"license": "BSD-3",
+	"authors": [
+		{
+			"name": "Jiří Šifalda",
+			"homepage": "http://jsifalda.name/"
+		}
+	],
+	"require": {
+		"nette/nette": "@dev",
+		"flame/bundle-installer": "@dev",
+		"flame/framework": ">=3.0.1",
+		"kdyby/bootstrap-form-renderer": ">=2.0.1",
+		"janmarek/webloader": ">=2.1.0"
+	}
+}
