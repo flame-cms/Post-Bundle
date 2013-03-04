@@ -63,4 +63,14 @@ class PostFacade extends \Flame\Doctrine\Model\Facade
 		$post->setHit($post->getHit() + 1);
 		return $this->save($post);
 	}
+
+	/**
+	 * @param Post $post
+	 * @return mixed
+	 */
+	public function changePublicState(Post $post)
+	{
+		$post->setPublic(!$post->getPublic());
+		return $this->save($post);
+	}
 }
