@@ -70,7 +70,7 @@ class PostFacade extends \Flame\Doctrine\Model\Facade
 	 */
 	public function changePublicState(Post $post)
 	{
-		$post->setPublic(!$post->getPublic());
+		$post->setPublish(!$post->getPublish());
 		return $this->save($post);
 	}
 }
